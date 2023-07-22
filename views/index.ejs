@@ -12,19 +12,91 @@
             <h1 class="text-xl">Meteorite Explorer</h1>
         </div>
         <div>
-            <form class=" bg-red-300 p-4 gap-2 flex" action="/getMeteorite" method="get">
-                <input class="border-b-2 border-black text-gray-600 opacity-80" type="text" value=""  placeholder="Enter Search Terms" name="searchTerms">
+            <form class=" bg-red-300 p-4 gap-2 flex" action="/getMeteorite" method="GET">
+                <input class="border-b-2 border-black text-gray-600 opacity-80" type="text" name="searchTerms" placeholder="Enter Search Terms" value="">
                 <button class=" bg-red-600 rounded text-black  p-4">Search</button>
             </form>
         </div>
     </footer>
-    <main>
-        <% if(typeof data !== 'undefined') { %>
-        <%datas.forEach(data =>{%>
-            <div><%=data.name%></div>
-            <div><%=data.id%></div>
-        <%})%>
-        <%}%>
+    <main class="flex justify-center">
+        <% if(typeof result !== 'undefined') { %>
+            <table class=" bg-green-700 text-slate-100">
+                <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th>Id</th>
+                        <th>Name type</th>
+                        <th>Rec class</th>
+                        <th>Mass (g)</th>
+                        <th>Fall</th>
+                        <th>Year</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>    
+                    </tr>                    
+                </thead>
+                <tbody>
+                    <% result.forEach(r => { %>
+                    <tr>
+                        <td><%= r.name %></td>
+                        <td class="text-right"><%= r.id %></td>
+                        <td><%= r.nametype %></td>
+                        <td><%= r.recclass %></td>
+                        <td class="text-center"><%= r.mass %></td>
+                        <td><%= r.fall %></td>
+                        <td class="text-right">
+                            <% if (r.year) { %>
+                                <%= r.year.slice(0, 4) %>
+                            <% } else { %>
+                                Year Not Available
+                            <% } %>
+                        </td>
+                        <td class="text-center"><%= r.reclat %></td>
+                        <td class="text-center"><%= r.reclong %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+
+        <% if(typeof datas !== 'undefined') { %>
+            <table class=" bg-green-700 text-slate-100">
+                <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th>Id</th>
+                        <th>Name type</th>
+                        <th>Rec class</th>
+                        <th>Mass (g)</th>
+                        <th>Fall</th>
+                        <th>Year</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>    
+                    </tr>                    
+                </thead>
+                <tbody>
+                    <% datas.forEach(data => { %>
+                        <tr>
+                            <td><%= data.name %></td>
+                            <td class="text-right"><%= data.id %></td>
+                            <td><%= data.nametype %></td>
+                            <td><%= data.recclass %></td>
+                            <td class="text-center"><%= data.mass %></td>
+                            <td><%= data.fall %></td>
+                            <td class="text-right">
+                                <% if (data.year) { %>
+                                    <%= data.year.slice(0, 4) %>
+                                <% } else { %>
+                                    Year Not Available
+                                <% } %>
+                            </td>
+                            <td class="text-center"><%= data.reclat %></td>
+                            <td class="text-center"><%= data.reclong %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+        
     </main>
     <script src="/js/main.js" defer ></script>
 </body>
