@@ -1,50 +1,56 @@
-const { default: axios } = require("axios")
+const { default: axios } = require("axios");
+
+
+let originalData = []; 
 
 module.exports = {
     getHomepage: async (req,res) => {
-        const response = await axios.get(`https://data.nasa.gov/resource/gh4g-9sfh.json`)
-            const result = response.data
-            console.log(result)
-            res.render('index', {
-                result
-            })
+      try {
+        const response = await axios.get(`https://data.nasa.gov/resource/gh4g-9sfh.json`);
+        originalData = response.data; // Store the API response in the originalData variable
+        
+        
+      // Pagination logic
+      const page = parseInt(req.query.page) || 1; // Get the page number from the query parameter (default to 1 if not specified)
+      const itemsPerPage = 50;
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedData = originalData.slice(startIndex, endIndex);
+
+        res.render('index', {
+          matchingElement:  paginatedData,
+          currentPage: page
+        });
+      } catch (err) {
+        console.error(err);
+      }
     },
     getMeteoriteInfo: async (req,res) => {
+        
         try{
             let { searchTerms } = req.query
             
-            console.log(searchTerms)
-            let filterParams
-            if (searchTerms !== '') {
-                let arr;
-                if (searchTerms.includes(' ')) {
-                  arr = searchTerms.split(' ');
-                  searchTerms = arr
-                    .map((item) => item[0].toUpperCase() + item.slice(1).toLowerCase())
-                    .join(' ');
-                } else if (searchTerms.includes('-')) {
-                  arr = searchTerms.split('-');
-                  searchTerms = arr
-                  .map((item) => item[0].toUpperCase() + item.slice(1).toLowerCase())
-                  .join('-');
-                } else {
-                  searchTerms = searchTerms[0].toUpperCase() + searchTerms.slice(1).toLowerCase();
-                }
-            
-                filterParams = `name=${searchTerms}`;
-              } else {
-                filterParams = '';
-              }
-            
-            console.log(filterParams)
-            axios.get(`https://data.nasa.gov/resource/gh4g-9sfh.json?${filterParams}`)
-            .then((response) => {
-                const datas = response.data
-                console.log(datas)                           
-                res.render('index', {
-                    datas
-                })
-            })   
+            if (!searchTerms || searchTerms.trim() === '') {
+              console.log("Original Data:", originalData);
+              res.render('index', {
+                  matchingElement: originalData
+              });
+              return; // Exit the function early
+          }
+
+            const response = await axios.get(`https://data.nasa.gov/resource/gh4g-9sfh.json`)
+            const result = response.data                     
+            const regexPattern = /[\s|-]/g;
+            searchTerms = searchTerms.toLowerCase().replace(regexPattern, '')
+            let matchingElement = []
+            result.forEach(element => {
+              if(element.name.toLowerCase().replace(regexPattern, '') == searchTerms){
+                matchingElement.push(element)                                
+              }             
+            });
+            res.render('index', {
+              matchingElement
+            })
         } catch(err){
             console.error(err)
         }

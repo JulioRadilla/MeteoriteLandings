@@ -18,85 +18,59 @@
             </form>
         </div>
     </footer>
-    <main class="flex justify-center">
-        <% if(typeof result !== 'undefined') { %>
-            <table class=" bg-green-700 text-slate-100">
+    <main >
+        <% if(typeof matchingElement !== 'undefined' && matchingElement.length > 0) { %>
+            <div class="relative overflow-scroll mx-4 max-w-6xl h-[calc(100vh-420px)] mx-auto my-4">
+            <table class=" bg-green-600 text-slate-100 table-fixed w-full relative">
                 <thead>
-                    <tr>
-                        <th class="text-left">Name</th>
-                        <th>Id</th>
-                        <th>Name type</th>
-                        <th>Rec class</th>
-                        <th>Mass (g)</th>
-                        <th>Fall</th>
-                        <th>Year</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>    
+                    <tr class="border-2 border-slate-700">
+                        <th class="text-left sticky left-0 w-44 border-2 border-slate-700">Name</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Id</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Name type</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Rec class</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Mass (g)</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Fall</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Year</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Latitude</th>
+                        <th class="text-left w-44 border-2 border-slate-700">Longitude</th>    
                     </tr>                    
                 </thead>
                 <tbody>
-                    <% result.forEach(r => { %>
-                    <tr>
-                        <td><%= r.name %></td>
-                        <td class="text-right"><%= r.id %></td>
-                        <td><%= r.nametype %></td>
-                        <td><%= r.recclass %></td>
-                        <td class="text-center"><%= r.mass %></td>
-                        <td><%= r.fall %></td>
-                        <td class="text-right">
-                            <% if (r.year) { %>
-                                <%= r.year.slice(0, 4) %>
-                            <% } else { %>
-                                Year Not Available
-                            <% } %>
-                        </td>
-                        <td class="text-center"><%= r.reclat %></td>
-                        <td class="text-center"><%= r.reclong %></td>
-                    </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        <% } %>
-
-        <% if(typeof datas !== 'undefined') { %>
-            <table class=" bg-green-700 text-slate-100">
-                <thead>
-                    <tr>
-                        <th class="text-left">Name</th>
-                        <th>Id</th>
-                        <th>Name type</th>
-                        <th>Rec class</th>
-                        <th>Mass (g)</th>
-                        <th>Fall</th>
-                        <th>Year</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>    
-                    </tr>                    
-                </thead>
-                <tbody>
-                    <% datas.forEach(data => { %>
+                    <% matchingElement.forEach(e => { %>
                         <tr>
-                            <td><%= data.name %></td>
-                            <td class="text-right"><%= data.id %></td>
-                            <td><%= data.nametype %></td>
-                            <td><%= data.recclass %></td>
-                            <td class="text-center"><%= data.mass %></td>
-                            <td><%= data.fall %></td>
-                            <td class="text-right">
-                                <% if (data.year) { %>
-                                    <%= data.year.slice(0, 4) %>
+                            <td class="sticky left-0 bg-green-800 border-2 border-slate-700"><%= e.name %></td>
+                            <td class="text-left border-2 border-slate-700"><%= e.id %></td>
+                            <td class="border-2 border-slate-700  "><%= e.nametype %></td>
+                            <td class="border-2 border-slate-700  "><%= e.recclass %></td>
+                            <td class="text-left border-2 border-slate-700"><%= e.mass %></td>
+                            <td class="border-2 border-slate-700  "><%= e.fall %></td>
+                            <td class="text-left border-2 border-slate-700">
+                                <% if (e.year) { %>
+                                    <%= e.year.slice(0, 4) %>
                                 <% } else { %>
                                     Year Not Available
                                 <% } %>
                             </td>
-                            <td class="text-center"><%= data.reclat %></td>
-                            <td class="text-center"><%= data.reclong %></td>
+                            <td class="text-left border-2 border-b-slate-700"><%= e.reclat %></td>
+                            <td class="text-left border-2 border-b-slate-700"><%= e.reclong %></td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
+            </div>
+            <!-- Pagination Controls -->
+            <div class="flex justify-center mt-4">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>" class="px-4 py-2 bg-blue-600 text-white rounded">Previous</a>
+                <% } %>
+
+                <% if (matchingElement.length === 50) { %>
+                    <a href="?page=<%= currentPage + 1 %>" class="px-4 py-2 bg-blue-600 text-white rounded ml-2">Next</a>
+                <% } %>
+            </div>
+        <% } else if(typeof matchingElement !== 'undefined' && matchingElement.length === 0){ %>
+            <p class="bg-yellow-300">No records found !</p>
         <% } %>
-        
     </main>
     <script src="/js/main.js" defer ></script>
 </body>
