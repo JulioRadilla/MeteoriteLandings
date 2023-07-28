@@ -6,8 +6,8 @@
     <title>Meteorite Explorer</title>
     <link rel="stylesheet" href="/dist/output.css">
 </head>
-<body class="bg-stone-900">
-    <footer class="flex flex-col items-center justify-center ">
+<body class="bg-slate-300">
+    <header class="flex flex-col items-center justify-center ">
         <div class=" bg-blue-800 w-full text-center">
             <h1 class="text-xl">Meteorite Explorer</h1>
         </div>
@@ -17,59 +17,114 @@
                 <button class=" bg-red-600 rounded text-black  p-4">Search</button>
             </form>
         </div>
-    </footer>
+    </header>
     <main >
         <% if(typeof matchingElement !== 'undefined' && matchingElement.length > 0) { %>
-            <div class="relative overflow-scroll mx-4 max-w-6xl h-[calc(100vh-420px)] mx-auto my-4">
-            <table class=" bg-green-600 text-slate-100 table-fixed w-full relative">
-                <thead>
-                    <tr class="border-2 border-slate-700">
-                        <th class="text-left sticky left-0 w-44 border-2 border-slate-700">Name</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Id</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Name type</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Rec class</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Mass (g)</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Fall</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Year</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Latitude</th>
-                        <th class="text-left w-44 border-2 border-slate-700">Longitude</th>    
-                    </tr>                    
-                </thead>
-                <tbody>
-                    <% matchingElement.forEach(e => { %>
-                        <tr>
-                            <td class="sticky left-0 bg-green-800 border-2 border-slate-700"><%= e.name %></td>
-                            <td class="text-left border-2 border-slate-700"><%= e.id %></td>
-                            <td class="border-2 border-slate-700  "><%= e.nametype %></td>
-                            <td class="border-2 border-slate-700  "><%= e.recclass %></td>
-                            <td class="text-left border-2 border-slate-700"><%= e.mass %></td>
-                            <td class="border-2 border-slate-700  "><%= e.fall %></td>
-                            <td class="text-left border-2 border-slate-700">
-                                <% if (e.year) { %>
-                                    <%= e.year.slice(0, 4) %>
-                                <% } else { %>
-                                    Year Not Available
-                                <% } %>
-                            </td>
-                            <td class="text-left border-2 border-b-slate-700"><%= e.reclat %></td>
-                            <td class="text-left border-2 border-b-slate-700"><%= e.reclong %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+            <div class="relative overflow-scroll w-10/12 h-[calc(100vh-380px)] mx-auto my-4">
+                <table class=" bg-green-600 text-slate-100 table-fixed w-full relative">
+                    <thead>
+                        <tr class="border-2 border-slate-700">
+                            <th class="text-left sticky left-0 w-44 border-2 border-slate-700">Name</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Id</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Name type</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Rec class</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Mass (g)</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Fall</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Year</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Latitude</th>
+                            <th class="text-left w-44 border-2 border-slate-700">Longitude</th>    
+                        </tr>                    
+                    </thead>
+                    <tbody>
+                        <% matchingElement.forEach(e => { %>
+                            <tr>
+                                <td class="sticky left-0 bg-green-800 border-2 border-slate-700">
+                                    <% if (e.name) { %>
+                                        <%= e.name %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="text-left border-2 border-slate-700">
+                                    <% if (e.id) { %>
+                                        <%= e.id %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="border-2 border-slate-700  ">
+                                    <% if (e.nametype) { %>
+                                        <%= e.nametype %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="border-2 border-slate-700  ">
+                                    <% if (e.recclass) { %>
+                                        <%= e.recclass %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="text-left border-2 border-slate-700">
+                                    <% if (e.mass) { %>
+                                        <%= e.mass %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="border-2 border-slate-700  ">
+                                    <% if (e.fall) { %>
+                                        <%= e.fall %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="text-left border-2 border-slate-700">
+                                    <% if (e.year) { %>
+                                        <%= e.year.slice(0, 4) %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="text-left border-2 border-slate-700">
+                                    <% if (e.reclat) { %>
+                                        <%= e.reclat %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td>
+                                <td class="text-left border-2 border-slate-700">
+                                    <% if (e.reclong) { %>
+                                        <%= e.reclong %>
+                                    <% } else { %>
+                                        (Not Recorded)
+                                    <% } %>
+                                </td> 
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
             </div>
             <!-- Pagination Controls -->
             <div class="flex justify-center mt-4">
-                <% if (currentPage > 1) { %>
-                    <a href="?page=<%= currentPage - 1 %>" class="px-4 py-2 bg-blue-600 text-white rounded">Previous</a>
-                <% } %>
-
-                <% if (matchingElement.length === 50) { %>
-                    <a href="?page=<%= currentPage + 1 %>" class="px-4 py-2 bg-blue-600 text-white rounded ml-2">Next</a>
-                <% } %>
+                <% if (currentPage > 1 && matchingElement.length === 50) { %>
+                    <a href="?page=<%= currentPage - 1 %>" class="px-4 py-2 bg-blue-600 text-white rounded"><- 50 Previous</a>
+                  <% } else { %>
+                    <span class="px-4 py-2 bg-blue-300 text-white rounded opacity-50 cursor-not-allowed"><- 50 Previous</span>
+                  <% } %>
+                
+                  <% if (matchingElement.length === 50) { %>
+                    <a href="?page=<%= currentPage + 1 %>" class="px-4 py-2 bg-blue-600 text-white rounded ml-2">Next 50 -></a>
+                  <% } else { %>
+                    <span class="px-4 py-2 bg-blue-300 text-white rounded ml-2 opacity-50 cursor-not-allowed">Next 50 -></span>
+                  <% } %>
+                
             </div>
         <% } else if(typeof matchingElement !== 'undefined' && matchingElement.length === 0){ %>
-            <p class="bg-yellow-300">No records found !</p>
+            <div class="w-full flex justify-center m-4">
+                <p class="bg-red-800 w-48 h-20 flex justify-center items-center font-bold text-white rounded">No records found !</p>
+            </div>
         <% } %>
     </main>
     <script src="/js/main.js" defer ></script>
